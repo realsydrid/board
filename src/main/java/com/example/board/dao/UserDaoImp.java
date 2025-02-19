@@ -1,0 +1,51 @@
+package com.example.board.dao;
+
+import com.example.board.dto.UserDto;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class UserDaoImp implements UserDao {
+    Connection conn;
+    PreparedStatement ps;
+    ResultSet rs;
+    public UserDaoImp(Connection conn) {
+        this.conn=conn;
+    }
+    @Override
+    public int insert(UserDto userDto) throws Exception{
+        int insert=0;
+        String sql="insert into users (user_id, user_name,password,phone_no) values(?,?,?,?)";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userDto.getUser_id());
+        ps.setString(2, userDto.getUser_name());
+        ps.setString(3, userDto.getPassword());
+        ps.setString(4, userDto.getPhone_no());
+        insert=ps.executeUpdate();
+
+
+
+        return insert;
+    }
+
+    @Override
+    public int update(UserDto userDto) throws Exception{
+        return 0;
+    }
+
+    @Override
+    public int updatePassword(UserDto userDto, String newPassword) throws Exception{
+        return 0;
+    }
+
+    @Override
+    public int delete(String userId) throws Exception{
+        return 0;
+    }
+
+    @Override
+    public UserDto findUserById(String userId) throws Exception{
+        return null;
+    }
+}

@@ -15,7 +15,7 @@
     if(login!=null && login.equals(true)){
 %>
 
-<p><%= user_name%>님 접속중 <a href="">로그아웃</a></p>
+<p><%= user_name%>님 접속중 <a href="./logout.do">로그아웃</a></p>
 <%}else {%>
 
 <a href="./login.jsp">로그인</a>
@@ -38,7 +38,7 @@
         <tbody>
         <tr>
             <td>1</td>
-            <td>제목입니다</td>
+            <td><a href="#">제목입니다</a></td>
             <td>작성자입니다</td>
             <td>작성일입니다</td>
         </tr>

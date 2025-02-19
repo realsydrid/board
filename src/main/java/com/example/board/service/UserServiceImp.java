@@ -16,7 +16,12 @@ public class UserServiceImp implements UserService {
     }
     @Override
     public boolean login(String userId, String password) throws Exception {
-        return false;
+        boolean login=false;
+        UserDto userDto=userDao.findUserById(userId);
+        if(userDto.getPassword().equals(password) && userDto.getUser_id().equals(userId)){
+            login=true;
+        }
+        return login;
     }
 
     @Override
@@ -42,5 +47,12 @@ public class UserServiceImp implements UserService {
             signUp=true;
         }
         return signUp;
+    }
+
+    @Override
+    public UserDto findUserById(String userId) throws Exception {
+        UserDto findUserById;
+        findUserById = userDao.findUserById(userId);
+        return findUserById;
     }
 }

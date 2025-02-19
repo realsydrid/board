@@ -6,7 +6,24 @@
 </head>
 <body>
 <h1>게시판</h1>
+<%
+    Object login=session.getAttribute("login");
+    Object user_name=session.getAttribute("user_name");
+%>
+
+<%
+    if(login!=null && login.equals(true)){
+%>
+
+<p><%= user_name%>님 접속중 <a href="">로그아웃</a></p>
+<%}else {%>
+
+<a href="./login.jsp">로그인</a>
 <a href="./signUp.jsp">회원가입</a>
+<%}%>
+
+
+
 
 <div>
     <table>

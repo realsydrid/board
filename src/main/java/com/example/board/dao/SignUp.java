@@ -1,6 +1,7 @@
 package com.example.board.dao;
 
 import com.example.board.dto.UserDto;
+import com.example.board.service.UserServiceImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,17 +22,19 @@ public class SignUp extends HttpServlet {
         String phone_no=req.getParameter("phone_no");
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter out = resp.getWriter();
+        boolean signUp;
 
-        int insert=0;
+
         try{
-            Connection conn=DBConnection.getConnection();
+
+            UserServiceImp userServiceImp=new UserServiceImp();
             UserDto userDto=new UserDto();
             userDto.setUser_name(user_name);
             userDto.setPassword(password);
             userDto.setUser_id(user_id);
             userDto.setPhone_no(phone_no);
-            UserDao userDao=new UserDaoImp(conn);
-            boolean isUserIdExists = userDao.findUserById(user_id) != null;
+
+            boolean isUserIdExists = userServiceImp.findUserById(user_id) != null;
             
             if (isUserIdExists) {
                 out.println("<script>");
@@ -40,10 +43,11 @@ public class SignUp extends HttpServlet {
                 out.println("</script>");
                 return;  
             }
+            signUp=userServiceImp.signUp(userDto);
 
-            insert=userDao.insert(userDto);
+
             
-            if (insert > 0) {
+            if (signUp) {
                 out.println("<script>");
                 out.println("alert('가입성공');");
                 out.println("location.href='" + req.getContextPath() + "/login.do';");

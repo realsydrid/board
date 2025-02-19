@@ -6,6 +6,8 @@
 </head>
 <body>
 <h1>게시판</h1>
+<a href="./signUp.jsp">회원가입</a>
+
 <div>
     <table>
         <thead>
@@ -26,7 +28,6 @@
         </tbody>
     </table>
 </div>
-<a href="./signUp.jsp">회원가입</a>
 <br/>
 </body>
 </html>

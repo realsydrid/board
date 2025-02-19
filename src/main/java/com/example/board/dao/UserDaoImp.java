@@ -46,6 +46,20 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public UserDto findUserById(String userId) throws Exception{
-        return null;
+        UserDto findUserById=null;
+        String sql="select * from users where user_id=?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userId);
+        rs=ps.executeQuery();
+        if(rs.next()){
+            findUserById=new UserDto();
+            findUserById.setUser_id(rs.getString("user_id"));
+            findUserById.setUser_name(rs.getString("user_name"));
+            findUserById.setPassword(rs.getString("password"));
+            findUserById.setPhone_no(rs.getString("phone_no"));
+            findUserById.setUser_no(rs.getInt("user_no"));
+
+        }
+        return findUserById;
     }
 }

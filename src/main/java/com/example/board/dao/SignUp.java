@@ -19,7 +19,9 @@ public class SignUp extends HttpServlet {
         String password=req.getParameter("password");
         String user_id=req.getParameter("user_id");
         String phone_no=req.getParameter("phone_no");
-        PrintWriter out=resp.getWriter();
+        resp.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = resp.getWriter();
+
         int insert=0;
         try{
             Connection conn=DBConnection.getConnection();
@@ -29,18 +31,36 @@ public class SignUp extends HttpServlet {
             userDto.setUser_id(user_id);
             userDto.setPhone_no(phone_no);
             UserDao userDao=new UserDaoImp(conn);
+            boolean isUserIdExists = userDao.findUserById(user_id) != null;
+            
+            if (isUserIdExists) {
+                out.println("<script>");
+                out.println("alert('중복된 아이디가 존재합니다.');");
+                out.println("location.href='" + req.getContextPath() + "/signUp.jsp';");
+                out.println("</script>");
+                return;  
+            }
+
             insert=userDao.insert(userDto);
-
-
+            
+            if (insert > 0) {
+                out.println("<script>");
+                out.println("alert('가입성공');");
+                out.println("location.href='" + req.getContextPath() + "/login.do';");
+                out.println("</script>");
+            } else {
+                out.println("<script>");
+                out.println("alert('가입실패');");
+                out.println("location.href='" + req.getContextPath() + "/signUp.jsp';");
+                out.println("</script>");
+            }
+            
         }catch (Exception e){
             e.printStackTrace();
-        }
-        if(insert>0){
-            out.println("<script>alert('가입성공');</script>");
-            resp.sendRedirect(req.getContextPath()+"/login.do");
-        }else {
-            out.println("<script>alert('가입실패')</script>");
-            resp.sendRedirect(req.getContextPath()+"/signUp.jsp");
+            out.println("<script>");
+            out.println("alert('오류가 발생했습니다.');");
+            out.println("location.href='" + req.getContextPath() + "/signUp.jsp';");
+            out.println("</script>");
         }
     }
 }

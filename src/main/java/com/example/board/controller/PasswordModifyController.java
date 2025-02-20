@@ -28,6 +28,14 @@ public class PasswordModifyController extends HttpServlet {
             UserServiceImp userServiceImp=new UserServiceImp();
             userDto=userServiceImp.findUserById(user_id.toString());
             modifyPassword=userServiceImp.modifyPassword(userDto,newPassword);
+
+
+
+            //변경시 로그에 추가해야함
+
+
+
+
             if(modifyPassword){
                 out.println("<script>alert('비밀번호 변경완료!');</script>");
                 resp.sendRedirect(req.getContextPath());

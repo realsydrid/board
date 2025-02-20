@@ -17,6 +17,12 @@ import java.sql.Connection;
 @WebServlet("/login.do")
 public class Login extends HttpServlet {
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
+
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String user_id = req.getParameter("user_id");
         String password = req.getParameter("password");
@@ -24,6 +30,7 @@ public class Login extends HttpServlet {
         boolean login = false;
         UserDto userDto;
         PrintWriter out = resp.getWriter();
+        resp.setContentType("text/html;charset=utf-8");
 
         try{
             UserService userServiceImp = new UserServiceImp();
@@ -39,8 +46,12 @@ public class Login extends HttpServlet {
                 resp.sendRedirect(req.getContextPath());
             }
             else{
-                out.println("<script>alert('로그인 실패')</script>");
-                resp.sendRedirect(req.getContextPath()+"/login.jsp");
+
+                out.println("<script>");
+                out.println("alert('로그인 실패!!!!!!!');");
+                out.println("location.href='" + req.getContextPath() + "/login.jsp';");
+                out.println("</script>");
+
 
             }
 

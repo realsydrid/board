@@ -1,5 +1,6 @@
 package com.example.board.dao;
 
+import com.example.board.dto.PasswordChangeLogDto;
 import com.example.board.dto.UserDto;
 import com.example.board.service.UserServiceImp;
 import jakarta.servlet.ServletException;
@@ -23,9 +24,13 @@ public class SignUp extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter out = resp.getWriter();
         boolean signUp;
+        PasswordChangeLogDto passwordChangeLogDto;
+        PasswordChangeLogDaoImp passwordChangeLogDaoImp;
 
 
         try{
+            passwordChangeLogDaoImp=new PasswordChangeLogDaoImp();
+            passwordChangeLogDto=new PasswordChangeLogDto();
 
             UserServiceImp userServiceImp=new UserServiceImp();
             UserDto userDto=new UserDto();
@@ -33,6 +38,8 @@ public class SignUp extends HttpServlet {
             userDto.setPassword(password);
             userDto.setUser_id(user_id);
             userDto.setPhone_no(phone_no);
+            passwordChangeLogDto.setChanged_password(password);
+            passwordChangeLogDto.setUser_id(user_id);
 
             boolean isUserIdExists = userServiceImp.findUserById(user_id) != null;
             
@@ -43,14 +50,13 @@ public class SignUp extends HttpServlet {
                 out.println("</script>");
                 return;  
             }
+            passwordChangeLogDaoImp.insert(passwordChangeLogDto);
             signUp=userServiceImp.signUp(userDto);
 
-
-            
             if (signUp) {
                 out.println("<script>");
                 out.println("alert('가입성공');");
-                out.println("location.href='" + req.getContextPath() + "/login.do';");
+                out.println("location.href='" + req.getContextPath() + "/login.jsp';");
                 out.println("</script>");
             } else {
                 out.println("<script>");

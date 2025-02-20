@@ -7,6 +7,8 @@ USE board_db;
 
 -- 테이블 생성
 DROP TABLE IF EXISTS boards;
+DROP TABLE IF EXISTS password_change_logs;
+DROP TABLE IF EXISTS login_logs;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -36,6 +38,14 @@ CREATE TABLE login_logs(
     browser VARCHAR(255) NOT NULL ,
     user_no INT NOT NULL ,
     FOREIGN KEY (user_no) REFERENCES users(user_no)
+
+);
+
+CREATE TABLE password_change_logs(
+    change_log_id INT AUTO_INCREMENT PRIMARY KEY ,
+    user_id VARCHAR(255) NOT NULL ,
+    changed_password VARCHAR(255) NOT NULL ,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );
 

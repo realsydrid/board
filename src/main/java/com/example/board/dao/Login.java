@@ -1,5 +1,6 @@
 package com.example.board.dao;
 
+import com.example.board.dto.LoginLogDto;
 import com.example.board.dto.UserDto;
 import com.example.board.service.UserService;
 import com.example.board.service.UserServiceImp;
@@ -27,6 +28,9 @@ public class Login extends HttpServlet {
         String user_id = req.getParameter("user_id");
         String password = req.getParameter("password");
         String user_name;
+        String ip_address;
+        String browser;
+        int user_no;
         boolean login = false;
         UserDto userDto;
         PrintWriter out = resp.getWriter();
@@ -34,10 +38,21 @@ public class Login extends HttpServlet {
 
         try{
             UserService userServiceImp = new UserServiceImp();
+            LoginLogDaoImp loginLogDaoImp = new LoginLogDaoImp();
+            LoginLogDto loginLogDto = new LoginLogDto();
             login = userServiceImp.login(user_id, password);
+
             if (login) {
                 userDto = userServiceImp.findUserById(user_id);
                 user_name = userDto.getUser_name();
+                user_no = userDto.getUser_no();
+                ip_address=req.getRemoteAddr();
+                String [] browsers= req.getHeader("Sec-Ch-Ua").split(",");
+                browser = browsers[1];
+                loginLogDto.setBrowser(browser);
+                loginLogDto.setUser_no(user_no);
+                loginLogDto.setIp_address(ip_address);
+                loginLogDaoImp.insert(loginLogDto);
                 HttpSession session = req.getSession();
                 session.setAttribute("user_id", user_id);
                 session.setAttribute("password", password);
@@ -54,6 +69,7 @@ public class Login extends HttpServlet {
 
 
             }
+            
 
 
 

@@ -27,4 +27,14 @@ CREATE TABLE boards (
 
 );
 
+CREATE TABLE login_logs(
+    login_log_id INT AUTO_INCREMENT PRIMARY KEY ,
+    created_at TIMESTAMP DEFAULT  CURRENT_TIMESTAMP,
+    ip_address VARCHAR(255) NOT NULL ,
+    browser VARCHAR(255) NOT NULL ,
+    user_no INT NOT NULL ,
+    FOREIGN KEY (user_no) REFERENCES users(user_no)
+
+);
+
 

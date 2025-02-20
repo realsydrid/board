@@ -50,6 +50,25 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public boolean modifyPassword(UserDto userDto,String newPassword) throws Exception {
+        boolean modifyPassword=false;
+        int update=0;
+        conn.setAutoCommit(false);
+        conn.commit();
+        try{
+            update=userDao.updatePassword(userDto,newPassword);
+            if(update>0){
+                modifyPassword=true;
+            }
+            conn.commit();
+        }catch (Exception e) {
+            conn.rollback();
+            throw new RuntimeException(e);
+        }
+        return modifyPassword;
+    }
+
+    @Override
     public UserDto findUserById(String userId) throws Exception {
         UserDto findUserById;
         findUserById = userDao.findUserById(userId);

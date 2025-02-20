@@ -36,7 +36,13 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public int updatePassword(UserDto userDto, String newPassword) throws Exception{
-        return 0;
+        int updatePassword=0;
+        String sql="update users set password=? where user_id=?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, newPassword);
+        ps.setString(2, userDto.getUser_id());
+        updatePassword=ps.executeUpdate();
+        return updatePassword;
     }
 
     @Override

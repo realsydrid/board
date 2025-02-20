@@ -17,12 +17,14 @@ CREATE TABLE users (
                        phone_no varchar(255) NOT NULL
 );
 
+
 CREATE TABLE boards (
     board_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_no INT NOT NULL,
+    user_name VARCHAR(255) NOT NULL ,
     FOREIGN KEY (user_no) REFERENCES users(user_no)
 
 );

@@ -46,4 +46,15 @@ public class UserDto {
     public void setPhone_no(String phone_no) {
         this.phone_no = phone_no;
     }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "user_no=" + user_no +
+                ", user_id='" + user_id + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", password='" + password + '\'' +
+                ", phone_no='" + phone_no + '\'' +
+                '}';
+    }
 }

@@ -1,3 +1,6 @@
+<%@ page import="com.example.board.dao.BoardDaoImp" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.board.dto.BoardDto" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -19,12 +22,19 @@
         </tr>
         </thead>
         <tbody>
+<%--        <%--%>
+<%--            BoardDaoImp boardDaoimp= new BoardDaoImp();--%>
+<%--            List<BoardDto> boards= boardDaoimp.findAll();--%>
+<%--        %>--%>
+
+
         <tr>
             <td>1</td>
             <td><a href="#">제목입니다</a></td>
             <td>작성자입니다</td>
             <td>작성일입니다</td>
         </tr>
+        
         </tbody>
     </table>
 </div>

@@ -11,7 +11,7 @@
     if(login!=null && login.equals(true)){
   %>
 
-  <p><%= user_name%>님 접속중 <a href="./logout.do">로그아웃</a></p>
+  <p><%= user_name%>님 접속중 <a href="./passwordModify.jsp">비밀번호 변경하기</a> <a href="./logout.do">로그아웃</a></p>
   <%}else {%>
 
   <a href="./login.jsp">로그인</a>

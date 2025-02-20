@@ -9,7 +9,8 @@
 <form action="./login.do" method="post">
     <p><label>아이디<input type="text" name="user_id"></label></p>
     <p><label>비밀번호<input type="text" name="password"></label></p>
-    <button>로그인</button>
+    <div><button>로그인</button><a href="./signUp.jsp">회원가입</a></div>
+
 </form>
 
 </body>

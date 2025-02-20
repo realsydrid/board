@@ -40,10 +40,11 @@ public class Login extends HttpServlet {
             UserService userServiceImp = new UserServiceImp();
             LoginLogDaoImp loginLogDaoImp = new LoginLogDaoImp();
             LoginLogDto loginLogDto = new LoginLogDto();
-            login = userServiceImp.login(user_id, password);
+            userDto= userServiceImp.findUserById(user_id);
+            login = userDto!=null && userServiceImp.login(user_id, password);
 
             if (login) {
-                userDto = userServiceImp.findUserById(user_id);
+
                 user_name = userDto.getUser_name();
                 user_no = userDto.getUser_no();
                 ip_address=req.getRemoteAddr();
@@ -69,7 +70,7 @@ public class Login extends HttpServlet {
 
 
             }
-            
+
 
 
 

@@ -2,7 +2,6 @@ package com.example.board.dto;
 
 public class PasswordChangeLogDto {
     private int change_log_id;
-    private int user_no;
     private String changed_password;
     private String created_at;
     private String user_id;
@@ -15,13 +14,7 @@ public class PasswordChangeLogDto {
         this.change_log_id = change_log_id;
     }
 
-    public int getUser_no() {
-        return user_no;
-    }
 
-    public void setUser_no(int user_no) {
-        this.user_no = user_no;
-    }
 
     public String getChanged_password() {
         return changed_password;
@@ -45,5 +38,15 @@ public class PasswordChangeLogDto {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    @Override
+    public String toString() {
+        return "PasswordChangeLogDto{" +
+                "change_log_id=" + change_log_id +
+                ", changed_password='" + changed_password + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", user_id='" + user_id + '\'' +
+                '}';
     }
 }

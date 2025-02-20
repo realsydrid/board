@@ -17,11 +17,20 @@ public class PasswordChangeLogDaoImp implements PasswordChangeLogDao {
     @Override
     public int insert(PasswordChangeLogDto passwordChangeLogDto) throws Exception {
         int insert=0;
-        String sql="insert into password_change_logs (user_id,changed_password)values(?,?)";
-        ps=conn.prepareStatement(sql);
-        ps.setString(1,passwordChangeLogDto.getUser_id());
-        ps.setString(2,passwordChangeLogDto.getChanged_password());
-        insert=ps.executeUpdate();
+        try{
+            conn.setAutoCommit(false);
+            conn.commit();
+            String sql="insert into password_change_logs (user_id,changed_password) values(?,?)";
+            ps=conn.prepareStatement(sql);
+            ps.setString(1,passwordChangeLogDto.getUser_id());
+            ps.setString(2,passwordChangeLogDto.getChanged_password());
+            insert=ps.executeUpdate();
+            conn.commit();
+        }catch (Exception e){
+            conn.rollback();
+
+        }
+
         return insert;
     }
 
@@ -36,13 +45,13 @@ public class PasswordChangeLogDaoImp implements PasswordChangeLogDao {
     @Override
     public List<PasswordChangeLogDto> findByUserId(int user_no) throws Exception{
         List<PasswordChangeLogDto> findByUserId=null;
-        String sql="select * from password_change_logs where user_no=?";
+        String sql="select * from password_change_logs where user_id=?";
         ps=conn.prepareStatement(sql);
         ps.setInt(1,user_no);
         rs=ps.executeQuery();
         while(rs.next()){
             PasswordChangeLogDto passwordChangeLogDto=new PasswordChangeLogDto();
-            passwordChangeLogDto.setUser_no(rs.getInt("user_no"));
+            passwordChangeLogDto.setUser_id(rs.getString(1));
             passwordChangeLogDto.setChanged_password(rs.getString("changed_password"));
             passwordChangeLogDto.setChange_log_id(rs.getInt("change_log_id"));
             passwordChangeLogDto.setCreated_at(rs.getString("created_at"));

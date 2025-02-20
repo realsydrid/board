@@ -19,7 +19,7 @@ public class BoardDaoImp implements BoardDao {
     @Override
     public List<BoardDto> findAll() throws Exception {
         List<BoardDto> findAll=null;
-        String sql="select * from board order by board_id desc";
+        String sql="select * from boards order by board_id desc";
         ps=conn.prepareStatement(sql);
         rs=ps.executeQuery();
         findAll=new ArrayList<>();

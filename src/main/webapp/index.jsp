@@ -1,4 +1,4 @@
-<%@ page import="com.example.board.dao.BoardDaoImp" %>
+        <%@ page import="com.example.board.dao.BoardDaoImp" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.board.dto.BoardDto" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -22,19 +22,26 @@
         </tr>
         </thead>
         <tbody>
-<%--        <%--%>
-<%--            BoardDaoImp boardDaoimp= new BoardDaoImp();--%>
-<%--            List<BoardDto> boards= boardDaoimp.findAll();--%>
-<%--        %>--%>
+        <%
+            List<BoardDto> boards;
+            try {
+                BoardDaoImp boardDaoimp = new BoardDaoImp();
+                boards = boardDaoimp.findAll();
 
-
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            for(BoardDto b : boards){%>
         <tr>
-            <td>1</td>
-            <td><a href="#">제목입니다</a></td>
-            <td>작성자입니다</td>
-            <td>작성일입니다</td>
-        </tr>
-        
+            <td><%=b.getBoard_id()%></td>
+            <td><a href="#"><%=b.getTitle()%></a></td>
+            <td><%=b.getUser_name()%></td>
+            <td><%=b.getCreated_at()%></td>
+        </tr>                  
+        <%}%>
+
+
+
         </tbody>
     </table>
 </div>

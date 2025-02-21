@@ -18,7 +18,7 @@ public class Logout extends HttpServlet {
         HttpSession session = req.getSession();
         session.invalidate();
         PrintWriter out = resp.getWriter();
-        out.println("<script>alert('로그아웃 되었습니다.');</script>");
-        resp.sendRedirect(req.getContextPath());
+        out.println("<script>alert('로그아웃 되었습니다.'); location.href='./';</script>");
+
     }
 }

@@ -4,6 +4,7 @@ import com.example.board.dao.DBConnection;
 import com.example.board.dao.UserDao;
 import com.example.board.dao.UserDaoImp;
 import com.example.board.dto.UserDto;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
 
@@ -18,7 +19,8 @@ public class UserServiceImp implements UserService {
     public boolean login(String userId, String password) throws Exception {
         boolean login=false;
         UserDto userDto=userDao.findUserById(userId);
-        if(userDto.getPassword().equals(password) && userDto.getUser_id().equals(userId)){
+
+        if(BCrypt.checkpw(password,userDto.getPassword()) && userDto.getUser_id().equals(userId)){
             login=true;
         }
         return login;

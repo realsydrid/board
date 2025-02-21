@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +19,10 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String user_name=req.getParameter("user_name");
-        String password=req.getParameter("password");
+
+        String password= BCrypt.hashpw(req.getParameter("password"), BCrypt.gensalt());
+
+
         String user_id=req.getParameter("user_id");
         String phone_no=req.getParameter("phone_no");
         resp.setContentType("text/html; charset=UTF-8");

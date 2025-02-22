@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>승엽게시판</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
 </head>
 <body>
 <%@include file="/header.jsp" %>

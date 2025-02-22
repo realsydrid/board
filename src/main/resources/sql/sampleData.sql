@@ -1,3 +1,4 @@
+USE board_db;
 
 INSERT INTO users (user_id, user_name, password,phone_no) VALUES
                                           ('test1', '홍길동','$2a$10$2cAGFCZKaya/tR2CokiYzuJZMukEg.xZsqW6jxgKjat6v3fwfMGQe','01012345678'),

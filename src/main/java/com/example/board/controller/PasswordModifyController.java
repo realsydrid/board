@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +21,10 @@ public class PasswordModifyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out=resp.getWriter();
-        req.setCharacterEncoding("utf-8");
-        String newPassword=req.getParameter("newPassword");
+
+        resp.setContentType("text/html;charset=utf-8");
+
+        String newPassword=BCrypt.hashpw(req.getParameter("newPassword"), BCrypt.gensalt());
         UserDto userDto= null;
 
         boolean modifyPassword=false;
@@ -36,11 +39,11 @@ public class PasswordModifyController extends HttpServlet {
             passwordChangeLogDto.setUser_id(userDto.getUser_id());
 
             passwordChangeLogDto.setChanged_password(newPassword);
-            System.out.println(passwordChangeLogDto.toString());
+
             PasswordChangeLogDaoImp passwordChangeLogDaoImp=new PasswordChangeLogDaoImp();
 
 
-            //변경시 로그에 추가해야함
+           
 
 
 
@@ -48,9 +51,13 @@ public class PasswordModifyController extends HttpServlet {
             if(modifyPassword){
                 change_log=passwordChangeLogDaoImp.insert(passwordChangeLogDto);
                 System.out.println(change_log);
-                out.println("<script>alert('비밀번호 변경완료!');" +
-                        "</script>");
-
+                
+                session.invalidate();
+                
+                out.println("<script>");
+                out.println("alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.');");
+                out.println("location.href='" + req.getContextPath() + "/login.jsp';");
+                out.println("</script>");
             }
             else{
                 out.println("<script>alert('비밀번호 실패!!!!!');</script>");

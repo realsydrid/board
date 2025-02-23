@@ -14,6 +14,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet("/passwordModify.do")
 public class PasswordModifyController extends HttpServlet {
@@ -22,30 +23,27 @@ public class PasswordModifyController extends HttpServlet {
         PrintWriter out=resp.getWriter();
 
         resp.setContentType("text/html;charset=utf-8");
-
-        String newPassword=BCrypt.hashpw(req.getParameter("newPassword"), BCrypt.gensalt());
+        String newPassword=req.getParameter("newPassword");
+        String hashedNewPassword =BCrypt.hashpw(newPassword, BCrypt.gensalt());
         UserDto userDto= null;
-
         boolean modifyPassword=false;
+        List<PasswordChangeLogDto> passwordChangeLogList=null;
         HttpSession session=req.getSession();
         Object user_id= session.getAttribute("user_id");
         int change_log=0;
         try{
             UserServiceImp userServiceImp=new UserServiceImp();
             userDto=userServiceImp.findUserById(user_id.toString());
-            modifyPassword=userServiceImp.modifyPassword(userDto,newPassword);
+            PasswordChangeLogDaoImp passwordChangeLogDaoImp=new PasswordChangeLogDaoImp();
+            //체인지로그 불러와서 같은 게 있으면 함수 중단 후 리다이렉트
+
+
+
             PasswordChangeLogDto passwordChangeLogDto=new PasswordChangeLogDto();
             passwordChangeLogDto.setUser_id(userDto.getUser_id());
+            passwordChangeLogDto.setChanged_password(hashedNewPassword);
 
-            passwordChangeLogDto.setChanged_password(newPassword);
-
-            PasswordChangeLogDaoImp passwordChangeLogDaoImp=new PasswordChangeLogDaoImp();
-
-
-           
-
-
-
+            modifyPassword=userServiceImp.modifyPassword(userDto, hashedNewPassword);
 
             if(modifyPassword){
                 change_log=passwordChangeLogDaoImp.insert(passwordChangeLogDto);

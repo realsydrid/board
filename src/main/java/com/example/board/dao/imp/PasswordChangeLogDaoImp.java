@@ -44,11 +44,11 @@ public class PasswordChangeLogDaoImp implements PasswordChangeLogDao {
     }
 
     @Override
-    public List<PasswordChangeLogDto> findByUserId(int user_no) throws Exception{
+    public List<PasswordChangeLogDto> findByUserId(String user_id) throws Exception{
         List<PasswordChangeLogDto> findByUserId=null;
         String sql="select * from password_change_logs where user_id=?";
         ps=conn.prepareStatement(sql);
-        ps.setInt(1,user_no);
+        ps.setString(1,user_id);
         rs=ps.executeQuery();
         while(rs.next()){
             PasswordChangeLogDto passwordChangeLogDto=new PasswordChangeLogDto();

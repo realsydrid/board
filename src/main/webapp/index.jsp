@@ -12,11 +12,14 @@
 <body>
 <%@include file="/header.jsp" %>
 <%
+
     Cookie[] cookies = request.getCookies();
     Cookie bannerCookie=null;
-    for (Cookie cookie : cookies){
-        if (cookie.getName().equals("bannerCookie")){
-            bannerCookie=cookie;
+    if (cookies!=null){
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("bannerCookie")) {
+                bannerCookie = cookie;
+            }
         }
     }
     if (bannerCookie==null || !bannerCookie.getValue().equals("1")){

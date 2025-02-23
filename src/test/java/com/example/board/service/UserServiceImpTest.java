@@ -2,6 +2,7 @@ package com.example.board.service;
 
 import com.example.board.dto.UserDto;
 import org.junit.jupiter.api.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,5 +1,7 @@
-package com.example.board.dao;
+package com.example.board.dao.imp;
 
+import com.example.board.dao.DBConnection;
+import com.example.board.dao.LoginLogDao;
 import com.example.board.dto.LoginLogDto;
 
 import java.sql.Connection;
@@ -12,7 +14,7 @@ public class LoginLogDaoImp implements LoginLogDao {
     PreparedStatement ps;
     ResultSet rs;
     public LoginLogDaoImp() throws Exception{
-        conn=DBConnection.getConnection();
+        conn= DBConnection.getConnection();
     }
 
     @Override

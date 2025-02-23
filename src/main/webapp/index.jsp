@@ -1,4 +1,4 @@
-        <%@ page import="com.example.board.dao.BoardDaoImp" %>
+        <%@ page import="com.example.board.dao.imp.BoardDaoImp" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.board.dto.BoardDto" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>

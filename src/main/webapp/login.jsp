@@ -7,7 +7,7 @@
 <%@include file="/header.jsp" %>
 <h1>로그인</h1>
 <form action="./login.do" method="post">
-    <p><label>아이디<input type="text" name="user_id"></label></p>
+    <p><label>아이디<input type="text" name="user_id" value="${rememberedId}"></label></p>
     <p><label>비밀번호<input type="password" name="password"></label></p>
     <div><button>로그인</button><a href="./signUp.jsp">회원가입</a></div>
     <p>

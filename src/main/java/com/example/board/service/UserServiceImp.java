@@ -2,7 +2,7 @@ package com.example.board.service;
 
 import com.example.board.dao.DBConnection;
 import com.example.board.dao.UserDao;
-import com.example.board.dao.UserDaoImp;
+import com.example.board.dao.imp.UserDaoImp;
 import com.example.board.dto.UserDto;
 import org.mindrot.jbcrypt.BCrypt;
 

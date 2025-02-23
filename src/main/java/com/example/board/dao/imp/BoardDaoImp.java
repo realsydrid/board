@@ -1,5 +1,7 @@
-package com.example.board.dao;
+package com.example.board.dao.imp;
 
+import com.example.board.dao.BoardDao;
+import com.example.board.dao.DBConnection;
 import com.example.board.dto.BoardDto;
 
 import java.sql.Connection;
@@ -14,7 +16,7 @@ public class BoardDaoImp implements BoardDao {
     ResultSet rs;
 
     public BoardDaoImp() throws Exception {
-        conn=DBConnection.getConnection();
+        conn= DBConnection.getConnection();
     }
     @Override
     public List<BoardDto> findAll() throws Exception {

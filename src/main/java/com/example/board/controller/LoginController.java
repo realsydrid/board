@@ -1,21 +1,16 @@
 package com.example.board.controller;
 
-import com.example.board.dao.LoginLogDaoImp;
+import com.example.board.dao.imp.LoginLogDaoImp;
 import com.example.board.dto.LoginLogDto;
 import com.example.board.dto.UserDto;
 import com.example.board.service.UserService;
 import com.example.board.service.UserServiceImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.mindrot.jbcrypt.BCrypt;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 
 @WebServlet("/login.do")
 public class LoginController extends HttpServlet {
@@ -30,7 +25,8 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String user_id = req.getParameter("user_id");
         String password = req.getParameter("password");
-        System.out.println(password);
+        String auto_login = req.getParameter("auto_login");
+        String remember_id = req.getParameter("remember_id");
         String user_name;
         String ip_address;
         String browser;
@@ -49,7 +45,49 @@ public class LoginController extends HttpServlet {
             login = userDto!=null && userServiceImp.login(user_id, password);
 
             if (login) {
+                Cookie autoLoginCookie;
+                Cookie remeberIdCookie;
+                Cookie userIdCookie;
+                Cookie passwordCookie;
+                if(auto_login!=null && auto_login.equals("1")){
+                    autoLoginCookie = new Cookie("auto_login", auto_login);
+                    autoLoginCookie.setPath("/");
+                    autoLoginCookie.setMaxAge(60*60*24*30);
+                    resp.addCookie(autoLoginCookie);
+                    userIdCookie = new Cookie("user_id", user_id);
+                    userIdCookie.setPath("/");
+                    userIdCookie.setMaxAge(60*60*24*30);
+                    resp.addCookie(userIdCookie);
+                    passwordCookie = new Cookie("password", password);
+                    passwordCookie.setPath("/");
+                    passwordCookie.setMaxAge(60*60*24*30);
+                    resp.addCookie(passwordCookie);
+                }
+                if (remember_id == null) {
+                    Cookie[] cookies = req.getCookies();
+                    if (cookies != null) {
+                        for (Cookie cookie : cookies) {
+                            if ("remember_id".equals(cookie.getName()) || "user_id".equals(cookie.getName())) {
+                                cookie.setMaxAge(0);
+                                cookie.setPath("/");
+                                resp.addCookie(cookie);
+                            }
+                        }
+                    }
+                }
 
+                if(remember_id!=null && remember_id.equals("1")){
+                    remeberIdCookie = new Cookie("remember_id", remember_id);
+                    remeberIdCookie.setPath("/");
+                    remeberIdCookie.setMaxAge(60*60*24*30);
+                    resp.addCookie(remeberIdCookie);
+                    if (auto_login==null){
+                        userIdCookie = new Cookie("user_id", user_id);
+                        userIdCookie.setPath("/");
+                        userIdCookie.setMaxAge(60*60*24*30);
+                        resp.addCookie(userIdCookie);
+                    }
+                }
 
                 user_name = userDto.getUser_name();
                 user_no = userDto.getUser_no();
@@ -79,7 +117,6 @@ public class LoginController extends HttpServlet {
                     browser = "Unknown";
                     loginLogDto.setBrowser(browser);
                 }
-
                 loginLogDto.setBrowser(browser);
                 loginLogDto.setUser_no(user_no);
                 loginLogDto.setIp_address(ip_address);
@@ -89,25 +126,13 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("user_name", user_name);
                 session.setAttribute("login", login);
                 resp.sendRedirect(req.getContextPath());
-
             }
             else{
-
-
                 out.println("<script>");
                 out.println("alert('로그인 실패!!!!!!!');");
                 out.println("location.href='" + req.getContextPath() + "/login.jsp';");
                 out.println("</script>");
-
-
             }
-
-
-
-
-
-
-
 
         }catch (Exception e){
             e.printStackTrace();

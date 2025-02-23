@@ -1,9 +1,8 @@
 package com.example.board.controller;
 
-import com.example.board.dao.PasswordChangeLogDaoImp;
+import com.example.board.dao.imp.PasswordChangeLogDaoImp;
 import com.example.board.dto.PasswordChangeLogDto;
 import com.example.board.dto.UserDto;
-import com.example.board.service.UserService;
 import com.example.board.service.UserServiceImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

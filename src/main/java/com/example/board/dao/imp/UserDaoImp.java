@@ -1,5 +1,6 @@
-package com.example.board.dao;
+package com.example.board.dao.imp;
 
+import com.example.board.dao.UserDao;
 import com.example.board.dto.UserDto;
 
 import java.sql.Connection;

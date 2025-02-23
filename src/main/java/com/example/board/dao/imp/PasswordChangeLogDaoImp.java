@@ -1,11 +1,12 @@
-package com.example.board.dao;
+package com.example.board.dao.imp;
 
+import com.example.board.dao.DBConnection;
+import com.example.board.dao.PasswordChangeLogDao;
 import com.example.board.dto.PasswordChangeLogDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PasswordChangeLogDaoImp implements PasswordChangeLogDao {
@@ -35,7 +36,7 @@ public class PasswordChangeLogDaoImp implements PasswordChangeLogDao {
     }
 
     public PasswordChangeLogDaoImp() throws Exception{
-        conn=DBConnection.getConnection();
+        conn= DBConnection.getConnection();
     }
     @Override
     public List<PasswordChangeLogDto> findAll() throws Exception{

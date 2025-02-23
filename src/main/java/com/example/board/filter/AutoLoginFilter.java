@@ -55,7 +55,7 @@ public class AutoLoginFilter implements Filter {
         }
 
 
-        if (autoLoginCookie != null && autoLoginCookie.getValue().equals("1")) {
+        if (autoLoginCookie != null && autoLoginCookie.getValue().equals("1") && userIdCookie !=null) {
 
             String user_id = userIdCookie.getValue();
             String password = passwordCookie.getValue();

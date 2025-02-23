@@ -1,11 +1,77 @@
-body {
-    background-color: olive;
+a {
+    color: #333;
+    text-decoration: none;
 }
 
-@media screen and (max-width: 768px) {
+a:hover {
+    text-decoration: underline;
+}
+body {
+    font-size: 14px;
+    padding: 12px;
+    margin: 0;
+}
+
+h1 {
+    font-size: 1.6rem;
+    text-align: center;
+    margin: 12px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    font-size: 0.85rem;
+}
+
+th, td {
+    padding: 8px 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4a4a4a;
+    color: white;
+}
+
+td:nth-child(2) {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 데스크탑 */
+@media screen and (min-width: 1024px) {
     body {
-        background-color: pink;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px;
+        font-size: 16px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+        margin: 20px 0;
+    }
+    
+    table {
+        font-size: 1.1rem;
+    }
+    
+    th, td {
+        padding: 12px;
+    }
+
+    td:nth-child(2) {
+        max-width: none;
+        white-space: normal;
     }
 }
+
+
+
 
     
